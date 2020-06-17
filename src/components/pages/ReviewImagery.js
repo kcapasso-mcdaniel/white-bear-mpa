@@ -20,9 +20,13 @@ export default function ReviewImagery() {
             </div>
          </div>
 
-         <button className="btn btn-link mx-4 my-5" id="back-to-answer-imagery">
+         <Link
+            to="review-answer"
+            className="btn btn-link mx-4 my-5"
+            id="back-to-answer-imagery"
+         >
             Previous card
-         </button>
+         </Link>
 
          <Link
             to="review-answer"

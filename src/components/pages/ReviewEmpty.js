@@ -18,12 +18,13 @@ export default function ReviewEmpty() {
             Previous card
          </Link>
 
-         <button
+         <Link
+            to="review-imagery"
             className="btn btn-outline-primary btn-lg float-right mt-5"
             id="next-answer"
          >
             Get more cards
-         </button>
+         </Link>
       </AppTemplate>
    );
 }

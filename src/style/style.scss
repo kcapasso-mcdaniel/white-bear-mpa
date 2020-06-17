@@ -74,7 +74,7 @@ textarea {
    background: url("../img/background-landing.jpg") no-repeat center center
       fixed;
    background-size: cover;
-   background-color: $blue-900;
+   background-color: blue($color: #000000);
    // spread image across 100% of the viewport
    height: 100vh;
 }

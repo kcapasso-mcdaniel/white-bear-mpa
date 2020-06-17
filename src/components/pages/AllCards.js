@@ -49,15 +49,15 @@ export default function AllCards() {
                he could see his brown belly, slightly domed
             </div>
          </div>
-         <a href="edit.html" className="float-right btn btn-link">
+         <Link to="edit" className="float-right btn btn-link">
             <img
                src={editIcon}
                width="20px"
-               style={{ marginBottom: "3px" }}
+               style={{ marginBottom: "3px", marginRight: "5px" }}
                alt=""
             />
             Edit
-         </a>
+         </Link>
          <div className="card">
             <div className="card-body bg-primary all-cards">
                One morning, when Gregor Samsa woke from troubled dreams, he

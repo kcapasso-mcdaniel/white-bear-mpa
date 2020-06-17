@@ -3,6 +3,7 @@ import thumbsUPIcon from "../../icons/thumbs-up.svg";
 import Header from "../ui/Header";
 import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
+import { Link } from "react-router-dom";
 
 export default function ReviewAnswer() {
    return (
@@ -30,12 +31,18 @@ export default function ReviewAnswer() {
                it and seemed ready to slide off any moment.
             </div>
          </div>
-         <button className="btn btn-link ml-4" id="back-to-answer-imagery">
+         <Link
+            to="review-imagery"
+            className="btn btn-link ml-4"
+            id="back-to-answer-imagery"
+         >
             Edit card
-         </button>
+         </Link>
          <div className="float-right">
-            <button className="btn btn-outline-primary">Needs work</button>
-            <button className="btn btn-primary ml-4">
+            <Link to="review-empty" className="btn btn-outline-primary">
+               Needs work
+            </Link>
+            <Link to="review-imagery" className="btn btn-primary ml-4">
                <img
                   src={thumbsUPIcon}
                   width="20px"
@@ -43,7 +50,7 @@ export default function ReviewAnswer() {
                   alt=""
                />
                Got it
-            </button>
+            </Link>
          </div>
       </AppTemplate>
    );

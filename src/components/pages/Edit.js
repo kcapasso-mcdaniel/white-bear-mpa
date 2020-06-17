@@ -3,6 +3,7 @@ import Header from "../ui/Header";
 import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
 import saveIcon from "../../icons/save.svg";
+import { Link } from "react-router-dom";
 
 export default function Edit() {
    return (
@@ -33,17 +34,21 @@ export default function Edit() {
                </div>
             </div>
          </div>
-
-         <p className="float-right mb-5">205/240</p>
+         <p className="float-right mb-5 ml-6">Bottom: 0/240</p>
+         <p className="float-right mb-5">Top: 0/240</p>
 
          <div className="clearfix"></div>
 
-         <button className="btn btn-link" id="back-to-answer-imagery">
+         <Link
+            to="all-cards"
+            className="btn btn-link"
+            id="back-to-answer-imagery"
+         >
             Discard changes
-         </button>
+         </Link>
 
-         <a
-            href="all-cards.html"
+         <Link
+            to="all-cards"
             className="btn btn-primary btn-lg float-right"
             id="save-imagery"
          >
@@ -54,7 +59,7 @@ export default function Edit() {
                alt=""
             />
             Save
-         </a>
+         </Link>
          <h4 className="all-cards text-muted text-center py-4 mt-4">
             Card properties
          </h4>
@@ -99,14 +104,14 @@ export default function Edit() {
             </label>
          </div>
 
-         <a
-            href="all-cards.html"
+         <Link
+            to="all-cards"
             type="button"
             className="btn btn-outline-danger mt-4"
             id="delete-button"
          >
             Delete this card
-         </a>
+         </Link>
       </AppTemplate>
    );
 }

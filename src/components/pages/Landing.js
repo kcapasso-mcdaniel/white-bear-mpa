@@ -1,5 +1,6 @@
 import React from "react";
 import brandLogo from "../../img/logo-landing.png";
+import { Link } from "react-router-dom";
 
 // import landingImage from "../../img/background-landing.jpg";
 
@@ -93,13 +94,13 @@ export default function Landing() {
                            className="form-control form-group"
                            id="userPassword"
                         />
-                        <a
-                           href="create-answer.html"
+                        <Link
+                           to="create-answer"
                            type="submit"
                            className="btn btn-success btn-lg mt-4 float-right"
                         >
                            Log in
-                        </a>
+                        </Link>
                      </div>
                   </div>
                </div>
