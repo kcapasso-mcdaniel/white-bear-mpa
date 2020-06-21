@@ -2,34 +2,43 @@ import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import saveIcon from "../../icons/save.svg";
 import { Link } from "react-router-dom";
+import memoryCards from "../../mock-data.js/memory-cards";
+const memoryCard = memoryCards[2];
 
 export default function Edit() {
    return (
       <AppTemplate>
          <h4 className="my-4 text-center text-muted">Edit card</h4>
 
-         <div className="mb-3">
-            <div className="card bg-primary">
-               <div className="card-body">
-                  One morning, when Gregor Samsa woke from troubled dreams, he
-                  found himself transformed in his bed into a horrible vermin.
-                  He lay on his armour-like back, and if he lifted his head a
-                  little he could see his brown belly, slightly domed and
-                  divided by arches into stiff sections. The bedding was hardly
-                  able to cover it and seemed ready to slide off any moment.
-               </div>
-            </div>
-            <div className="card bg-secondary">
-               <div className="card-body">
-                  One morning, when Gregor Samsa woke from troubled dreams, he
-                  found himself transformed in his bed into a horrible vermin.
-                  He lay on his armour-like back, and if he lifted his head a
-                  little he could see his brown belly, slightly domed and
-                  divided by arches into stiff sections. The bedding was hardly
-                  able to cover it and seemed ready to slide off any moment.
-               </div>
+         <div className="card">
+            <div className="card-body bg-primary">
+               <textarea
+                  rows="7"
+                  className="d-md-none"
+                  defaultValue={memoryCard.imagery}
+               ></textarea>
+               <textarea
+                  rows="4"
+                  className="d-none d-md-block"
+                  defaultValue={memoryCard.imagery}
+               ></textarea>
             </div>
          </div>
+         <div className="card">
+            <div className="card-body bg-secondary">
+               <textarea
+                  rows="7"
+                  className="d-md-none"
+                  defaultValue={memoryCard.answer}
+               ></textarea>
+               <textarea
+                  rows="4"
+                  className="d-none d-md-block"
+                  defaultValue={memoryCard.answer}
+               ></textarea>
+            </div>
+         </div>
+
          <p className="float-right mb-5 ml-6">Bottom: 0/240</p>
          <p className="float-right mb-5">Top: 0/240</p>
 
@@ -65,25 +74,25 @@ export default function Edit() {
                   <th className="text-muted" scope="row">
                      Created on:
                   </th>
-                  <td>Dec. 24, 2019</td>
+                  <td>{memoryCard.createdAt}</td>
                </tr>
                <tr>
                   <th className="text-muted" scope="row">
                      Last attempt:
                   </th>
-                  <td>Dec. 31, 2019</td>
+                  <td>{memoryCard.lastAttemptAt}</td>
                </tr>
                <tr>
                   <th className="text-muted" scope="row">
                      Next attempt:
                   </th>
-                  <td>Jul. 14, 2020</td>
+                  <td>{memoryCard.nextAttemptAt}</td>
                </tr>
                <tr>
                   <th className="text-muted" scope="row">
                      Consecutives:
                   </th>
-                  <td>4</td>
+                  <td>{memoryCard.totalSuccessfulAttempts}</td>
                </tr>
             </thead>
          </table>

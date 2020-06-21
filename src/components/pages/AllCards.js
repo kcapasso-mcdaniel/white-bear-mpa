@@ -1,13 +1,9 @@
 import React from "react";
 import AppTemplate from "../ui/AppTemplate";
-import editIcon from "../../icons/edit.svg";
-import { Link } from "react-router-dom";
+import MemoryCard from "../ui/MemoryCard";
 import memoryCards from "../../mock-data.js/memory-cards";
-// select a specific memory card
-const memoryCard = memoryCards[0];
 
 export default function AllCards() {
-   console.log(memoryCards);
    return (
       <AppTemplate>
          {/* <!-- Search menu  --> */}
@@ -38,28 +34,17 @@ export default function AllCards() {
                   <option>Easiest</option>
                </select>
             </div>
-            {/* <!-- Cards --> */}
-            <div className="card mt-4">
-               <div className="card-body bg-primary all-cards">
-                  {memoryCard.imagery}
-               </div>
-            </div>
-            <div className="card">
-               <div className="card-body bg-secondary all-cards">
-                  {memoryCard.answer}
-               </div>
-            </div>
-
-            <Link to="edit" className="d-flex btn btn-link">
-               <img
-                  src={editIcon}
-                  width="20px"
-                  style={{ marginBottom: "3px", marginRight: "5px" }}
-                  alt=""
-               />
-               Edit
-            </Link>
          </div>
+
+         {memoryCards.map((memoryCard) => {
+            return (
+               <MemoryCard
+                  answer={memoryCard.answer}
+                  imagery={memoryCard.imagery}
+                  key={memoryCard.id}
+               />
+            );
+         })}
       </AppTemplate>
    );
 }
