@@ -74,9 +74,8 @@ textarea {
    background: url("../img/background-landing.jpg") no-repeat center center
       fixed;
    background-size: cover;
-   background-color: blue($color: #000000);
    // spread image across 100% of the viewport
-   height: 100vh;
+   min-height: 100vh;
 }
 .landing-page {
    font-size: 3.75rem;

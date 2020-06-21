@@ -97,7 +97,7 @@ export default function Landing() {
                         <Link
                            to="create-answer"
                            type="submit"
-                           className="btn btn-success btn-lg mt-4 float-right"
+                           className="btn btn-success mt-4 float-right"
                         >
                            Log in
                         </Link>

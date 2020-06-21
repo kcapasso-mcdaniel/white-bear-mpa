@@ -1,14 +1,10 @@
 import React from "react";
-import Header from "../ui/Header";
-import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 
 export default function ReviewImagery() {
    return (
       <AppTemplate>
-         <Header />
-         <Navigation />
          <div className="card">
             <div className="card-body bg-primary">
                One morning, when Gregor Samsa woke from troubled dreams, he
