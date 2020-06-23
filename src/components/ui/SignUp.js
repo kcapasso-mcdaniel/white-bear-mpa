@@ -9,6 +9,7 @@ export default class SignUp extends React.Component {
          isDisplayingInputs: false,
          emailError: "",
          passwordError: "",
+         hasEmailError: false,
       };
    }
 
@@ -24,9 +25,24 @@ export default class SignUp extends React.Component {
       // must have valid email regex
       const emailInput = document.getElementById("email-input").value;
       console.log(emailInput);
+      const lowerCasedEmailInput = emailInput.toLowerCase();
+      console.log(lowerCasedEmailInput);
+      // eslint-disable-next-line
+      const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       // set the state with email error and change string to an error message
       if (emailInput === "")
-         this.setState({ emailError: "Please enter your email address." });
+         this.setState({
+            emailError: "Please enter your email address.",
+            hasEmailError: true,
+         });
+      else if (emailRegex.test(lowerCasedEmailInput) === false) {
+         this.setState({
+            emailError: "Please enter a valid email address.",
+            hasEmailError: true,
+         });
+      } else {
+         this.setState({ emailError: "", hasEmailError: false });
+      }
    }
    render() {
       return (
@@ -47,13 +63,14 @@ export default class SignUp extends React.Component {
                         className={classnames({
                            "form-control": true,
                            "mb-2": true,
-                           "is-invalid": this.state.emailError !== "",
+                           "is-invalid": this.state.hasEmailError,
+                           // "is-invalid": this.state.emailError !== "",
                         })}
                         id="email-input"
                         required
                      />
 
-                     {this.state.emailError !== "" && (
+                     {this.state.hasEmailError && (
                         <p className="text-danger">{this.state.emailError}</p>
                      )}
 
