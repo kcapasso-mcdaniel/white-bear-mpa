@@ -84,6 +84,7 @@ textarea {
 .landing-card {
    padding: map-get($spacers, 4);
    font-family: $font-family-sans-serif;
+   font-size: $font-size-base;
 }
 
 .sign-up-form {

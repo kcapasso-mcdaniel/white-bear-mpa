@@ -20,13 +20,12 @@ export default class SignUp extends React.Component {
    }
 
    validateAndCreateUser() {
-      console.log("VALIDATE ME");
       //   can't be blank
-      // must have valid email regex
       const emailInput = document.getElementById("email-input").value;
       console.log(emailInput);
       const lowerCasedEmailInput = emailInput.toLowerCase();
       console.log(lowerCasedEmailInput);
+      // must have valid email regex
       // eslint-disable-next-line
       const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       // set the state with email error and change string to an error message
@@ -35,6 +34,7 @@ export default class SignUp extends React.Component {
             emailError: "Please enter your email address.",
             hasEmailError: true,
          });
+      // test evaluates the email input and compares to the regex if false set the state with the error message and hasEmailError is true
       else if (emailRegex.test(lowerCasedEmailInput) === false) {
          this.setState({
             emailError: "Please enter a valid email address.",
@@ -62,9 +62,7 @@ export default class SignUp extends React.Component {
                         type="email"
                         className={classnames({
                            "form-control": true,
-                           "mb-2": true,
                            "is-invalid": this.state.hasEmailError,
-                           // "is-invalid": this.state.emailError !== "",
                         })}
                         id="email-input"
                         required
@@ -74,7 +72,9 @@ export default class SignUp extends React.Component {
                         <p className="text-danger">{this.state.emailError}</p>
                      )}
 
-                     <label htmlFor="password-input">Create a password</label>
+                     <label htmlFor="password-input" className="mt-2">
+                        Create a password
+                     </label>
                      <input
                         type="password"
                         className="form-control text-danger"
