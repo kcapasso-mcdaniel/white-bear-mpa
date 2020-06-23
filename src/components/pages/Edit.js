@@ -3,7 +3,8 @@ import AppTemplate from "../ui/AppTemplate";
 import saveIcon from "../../icons/save.svg";
 import { Link } from "react-router-dom";
 import memoryCards from "../../mock-data.js/memory-cards";
-const memoryCard = memoryCards[2];
+import toDisplayDate from "date-fns/format";
+const memoryCard = memoryCards[0];
 
 export default function Edit() {
    return (
@@ -74,19 +75,23 @@ export default function Edit() {
                   <th className="text-muted" scope="row">
                      Created on:
                   </th>
-                  <td>{memoryCard.createdAt}</td>
+                  <td>{toDisplayDate(memoryCard.createdAt, "MMM. d, y")}</td>
                </tr>
                <tr>
                   <th className="text-muted" scope="row">
                      Last attempt:
                   </th>
-                  <td>{memoryCard.lastAttemptAt}</td>
+                  <td>
+                     {toDisplayDate(memoryCard.lastAttemptAt, "MMM. d, y")}
+                  </td>
                </tr>
                <tr>
                   <th className="text-muted" scope="row">
                      Next attempt:
                   </th>
-                  <td>{memoryCard.nextAttemptAt}</td>
+                  <td>
+                     {toDisplayDate(memoryCard.nextAttemptAt, "MMM. d, y")}
+                  </td>
                </tr>
                <tr>
                   <th className="text-muted" scope="row">

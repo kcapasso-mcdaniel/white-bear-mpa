@@ -1,14 +1,11 @@
 import React from "react";
-import Header from "../ui/Header";
-import Navigation from "../ui/Navigation";
+
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 
 export default function ReviewEmpty() {
    return (
       <AppTemplate>
-         <Header />
-         <Navigation />
          <h4 className="my-4 text-center text-muted">Out of cards</h4>
          <Link
             to="review-answer"
