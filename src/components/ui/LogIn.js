@@ -10,17 +10,21 @@ export default function LogIn() {
                <p className="mb-4">
                   Log in with your email address and password.
                </p>
-               <label className="mt-4">Email address</label>
+               <label htmlFor="login-email-input" className="mt-4">
+                  Email address
+               </label>
                <input
                   type="email"
                   className="form-control form-group"
-                  id="userEmailAddress"
+                  id="login-email-input"
                />
-               <label className="mt-2">Password</label>
+               <label htmlFor="login-password-input" className="mt-2">
+                  Password
+               </label>
                <input
                   type="password"
                   className="form-control form-group"
-                  id="userPassword"
+                  id="login-password-input"
                />
                <Link
                   to="create-answer"

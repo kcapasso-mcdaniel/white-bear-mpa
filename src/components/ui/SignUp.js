@@ -10,6 +10,7 @@ export default class SignUp extends React.Component {
          emailError: "",
          passwordError: "",
          hasEmailError: false,
+         hasPasswordError: false,
       };
    }
 
@@ -19,10 +20,8 @@ export default class SignUp extends React.Component {
       this.setState({ isDisplayingInputs: true });
    }
 
-   validateAndCreateUser() {
-      //   can't be blank
-      const emailInput = document.getElementById("email-input").value;
-      console.log(emailInput);
+   // function for email validation using state
+   setValidEmailState(emailInput) {
       const lowerCasedEmailInput = emailInput.toLowerCase();
       console.log(lowerCasedEmailInput);
       // must have valid email regex
@@ -44,6 +43,66 @@ export default class SignUp extends React.Component {
          this.setState({ emailError: "", hasEmailError: false });
       }
    }
+
+   // function to check for the local part of the email
+   checkHasLocalPart(signUpPasswordInput, emailInput) {
+      const localPart = emailInput.split("@")[0];
+      console.log(localPart);
+      // fixes small bug with password error message
+      if (localPart === "") return false;
+      else if (localPart.length < 4) return false;
+      else return signUpPasswordInput.includes(localPart);
+   }
+
+   // function to validate the password with state
+   setValidPasswordState(signUpPasswordInput, emailInput) {
+      console.log(signUpPasswordInput);
+
+      const uniqChars = [...new Set(signUpPasswordInput)];
+      console.log(uniqChars);
+
+      if (signUpPasswordInput === "") {
+         this.setState({
+            passwordError: "Please create a password.",
+            hasPasswordError: true,
+         });
+      } else if (signUpPasswordInput.length < 9) {
+         this.setState({
+            passwordError: "Your password must be at least 9 characters.",
+            hasPasswordError: true,
+         });
+      } else if (this.checkHasLocalPart(signUpPasswordInput, emailInput)) {
+         this.setState({
+            passwordError: "Your password cannot contain your email address.",
+            hasPasswordError: true,
+         });
+      } else if (uniqChars.length < 3) {
+         this.setState({
+            passwordError:
+               "Your password must contain at least 3 unique characters.",
+            hasPasswordError: true,
+         });
+      } else {
+         this.setState({ passwordError: "", hasPasswordError: false });
+      }
+   }
+
+   validateAndCreateUser() {
+      //   can't be blank
+      const emailInput = document.getElementById("signup-email-input").value;
+      console.log(emailInput);
+      const signUpPasswordInput = document.getElementById(
+         "signup-password-input"
+      ).value;
+      this.setValidEmailState(emailInput);
+      this.setValidPasswordState(signUpPasswordInput, emailInput);
+      if (
+         this.state.hasEmailError === false &&
+         this.state.hasPasswordError === false
+      ) {
+         console.log("VALID");
+      }
+   }
    render() {
       return (
          <div className="col-xl-5 col-sm-6 col-12 mb-6">
@@ -56,15 +115,17 @@ export default class SignUp extends React.Component {
                      <p className="text-success mb-4">
                         Let's get you signed up.
                      </p>
-
-                     <label htmlFor="email-input">Enter email address</label>
+                     {/* email input */}
+                     <label htmlFor="signup-email-input">
+                        Enter email address
+                     </label>
                      <input
                         type="email"
                         className={classnames({
                            "form-control": true,
                            "is-invalid": this.state.hasEmailError,
                         })}
-                        id="email-input"
+                        id="signup-email-input"
                         required
                      />
 
@@ -72,15 +133,25 @@ export default class SignUp extends React.Component {
                         <p className="text-danger">{this.state.emailError}</p>
                      )}
 
-                     <label htmlFor="password-input" className="mt-2">
+                     {/* password input */}
+                     <label htmlFor="signup-password-input" className="mt-2">
                         Create a password
                      </label>
                      <input
                         type="password"
-                        className="form-control text-danger"
-                        id="password-input"
+                        // classnames takes an object
+                        className={classnames({
+                           "form-control": true,
+                           "is-invalid": this.state.hasPasswordError,
+                        })}
+                        id="signup-password-input"
                      />
-                     <p className="text-danger">Password error will go here.</p>
+                     {this.state.hasPasswordError && (
+                        <p className="text-danger">
+                           {this.state.passwordError}
+                        </p>
+                     )}
+
                      <button
                         type="submit"
                         className="btn btn-success mt-4 w-100"
