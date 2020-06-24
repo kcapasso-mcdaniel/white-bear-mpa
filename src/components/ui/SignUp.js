@@ -1,5 +1,7 @@
 import React from "react";
 import classnames from "classnames";
+import hash from "object-hash";
+import { v4 as getUuid } from "uuid";
 
 export default class SignUp extends React.Component {
    constructor(props) {
@@ -21,7 +23,7 @@ export default class SignUp extends React.Component {
    }
 
    // function for email validation using state
-   setValidEmailState(emailInput) {
+   async setValidEmailState(emailInput) {
       const lowerCasedEmailInput = emailInput.toLowerCase();
       console.log(lowerCasedEmailInput);
       // must have valid email regex
@@ -47,7 +49,7 @@ export default class SignUp extends React.Component {
    // function to check for the local part of the email
    checkHasLocalPart(signUpPasswordInput, emailInput) {
       const localPart = emailInput.split("@")[0];
-      console.log(localPart);
+      console.log("localPart", localPart);
       // fixes small bug with password error message
       if (localPart === "") return false;
       else if (localPart.length < 4) return false;
@@ -55,7 +57,7 @@ export default class SignUp extends React.Component {
    }
 
    // function to validate the password with state
-   setValidPasswordState(signUpPasswordInput, emailInput) {
+   async setValidPasswordState(signUpPasswordInput, emailInput) {
       console.log(signUpPasswordInput);
 
       const uniqChars = [...new Set(signUpPasswordInput)];
@@ -87,20 +89,26 @@ export default class SignUp extends React.Component {
       }
    }
 
-   validateAndCreateUser() {
+   async validateAndCreateUser() {
       //   can't be blank
       const emailInput = document.getElementById("signup-email-input").value;
       console.log(emailInput);
       const signUpPasswordInput = document.getElementById(
          "signup-password-input"
       ).value;
-      this.setValidEmailState(emailInput);
-      this.setValidPasswordState(signUpPasswordInput, emailInput);
+      await this.setValidEmailState(emailInput);
+      await this.setValidPasswordState(signUpPasswordInput, emailInput);
       if (
          this.state.hasEmailError === false &&
          this.state.hasPasswordError === false
       ) {
-         console.log("VALID");
+         const user = {
+            id: getUuid(),
+            email: emailInput,
+            password: hash(signUpPasswordInput),
+            createdAt: Date.now(),
+         };
+         console.log(user);
       }
    }
    render() {
