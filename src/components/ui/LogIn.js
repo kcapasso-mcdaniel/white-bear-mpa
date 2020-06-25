@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import classnames from "classnames";
 import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
@@ -114,7 +115,8 @@ export default class LogIn extends React.Component {
                   {this.state.hasPasswordError && (
                      <p className="text-danger">{this.state.passwordError}</p>
                   )}
-                  <button
+                  <Link
+                     to="create-answer"
                      type="submit"
                      className="btn btn-success mt-2 float-right"
                      onClick={() => {
@@ -122,7 +124,7 @@ export default class LogIn extends React.Component {
                      }}
                   >
                      Log in
-                  </button>
+                  </Link>
                </div>
             </div>
          </div>
