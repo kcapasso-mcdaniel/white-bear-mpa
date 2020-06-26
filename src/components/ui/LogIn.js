@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { withRouter } from "react-router-dom";
 import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
 
-export default class LogIn extends React.Component {
+class LogIn extends React.Component {
    constructor(props) {
       super(props);
       console.log("In a new class component");
@@ -75,8 +75,10 @@ export default class LogIn extends React.Component {
             createdAt: Date.now(),
          };
          console.log(user);
+         this.props.history.push("/create-answer");
       }
    }
+
    render() {
       return (
          <div className="col-xl-5 offset-xl-2 col-sm-6 col-12 mb-6">
@@ -86,6 +88,7 @@ export default class LogIn extends React.Component {
                   <p className="mb-4">
                      Log in with your email address and password.
                   </p>
+
                   <label htmlFor="login-email-input" className="mt-4">
                      Email address
                   </label>
@@ -115,19 +118,20 @@ export default class LogIn extends React.Component {
                   {this.state.hasPasswordError && (
                      <p className="text-danger">{this.state.passwordError}</p>
                   )}
-                  <Link
-                     to="create-answer"
-                     type="submit"
+                  <button
+                     type="button"
                      className="btn btn-success mt-2 float-right"
                      onClick={() => {
                         this.validateAndCreateUser();
                      }}
                   >
                      Log in
-                  </Link>
+                  </button>
                </div>
             </div>
          </div>
       );
    }
 }
+
+export default withRouter(LogIn);
