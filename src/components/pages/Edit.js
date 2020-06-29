@@ -39,12 +39,12 @@ export default class Edit extends React.Component {
       } else return false;
    }
 
-   displayTheDeleteButton() {
+   toggleShowDeleteButton(e) {
       this.setState({
-         isShowDeleteChecked: false,
+         isShowDeleteChecked: e.target.checked,
+         isDeleteButtonDisplayed: !this.state.isDeleteButtonDisplayed,
       });
    }
-
    render() {
       return (
          <AppTemplate>
@@ -162,10 +162,10 @@ export default class Edit extends React.Component {
                   name="show-delete"
                   checked={this.state.isShowDeleteChecked}
                   onChange={(e) => {
-                     this.displayTheDeleteButton(e);
+                     this.toggleShowDeleteButton(e);
                   }}
                />
-               <label className="custom-control-label" htmlFor="customCheck">
+               <label className="custom-control-label" htmlFor="show-delete">
                   Show delete button
                </label>
             </div>
