@@ -11,7 +11,7 @@ export default class CreateImagery extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         imageryText: memoryCard.imagery,
+         imageryText: "",
       };
    }
 

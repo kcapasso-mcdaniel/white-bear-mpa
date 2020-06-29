@@ -2,28 +2,53 @@ import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import MemoryCard from "../ui/MemoryCard";
 import memoryCards from "../../mock-data.js/memory-cards";
+import orderBy from "lodash/orderBy";
 
 export default class AllCards extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         allMemoryCards: memoryCards,
-         filteredCards: memoryCards,
+         order: '["createdAt"], ["desc"]',
+         allMemoryCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
+         displayFilteredCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
       };
    }
 
-   filteredCardList() {
+   // function to search for a word within a card
+   filterTheInput() {
       const searchInput = document
          .getElementById("search-input")
          .value.toLowerCase();
       console.log(searchInput, "this is the search input");
-      const allMemoryCards = [...this.state.allMemoryCards];
-      const filteredCards = allMemoryCards.filter((memoryCard) => {
-         let filteredCard = memoryCard.imagery + memoryCard.answer;
-         return filteredCard.indexOf(searchInput) >= 0;
+      const copyAllMemoryCards = [...this.state.allMemoryCards];
+      const filteredCards = copyAllMemoryCards.filter((memoryCard) => {
+         let filteredCard =
+            memoryCard.imagery.toLowerCase() + memoryCard.answer.toLowerCase();
+         console.log(filteredCard, "pizza");
+         return filteredCard.includes(searchInput);
       });
-      this.setState({ filteredCards });
-      console.log(filteredCards);
+      this.setState({ displayFilteredCards: filteredCards });
+   }
+
+   setOrder(e) {
+      console.log("You've made a change");
+      const newOrder = e.target.value;
+      this.setState({ order: newOrder }, () => {
+         this.setMemoryCards();
+      });
+   }
+
+   setMemoryCards() {
+      console.log("setting memory cards");
+      const copyOfDisplayedFilteredCards = [...this.state.displayFilteredCards];
+      const toJson = JSON.parse(this.state.order);
+      console.log(...toJson);
+      const orderedMemoryCards = orderBy(
+         copyOfDisplayedFilteredCards,
+         ...toJson
+      );
+      console.log(orderedMemoryCards);
+      this.setState({ displayFilteredCards: orderedMemoryCards });
    }
 
    render() {
@@ -46,7 +71,7 @@ export default class AllCards extends React.Component {
                      type="button"
                      id="search-button"
                      onClick={() => {
-                        this.filteredCardList();
+                        this.filterTheInput();
                      }}
                   >
                      Search
@@ -60,15 +85,25 @@ export default class AllCards extends React.Component {
                   <p className="mt-2">Sort cards by</p>
                </div>
                <div className="col-6">
-                  <select className="w-100">
-                     <option>Most Recent</option>
-                     <option>Oldest</option>
-                     <option>Hardest</option>
-                     <option>Easiest</option>
+                  <select
+                     value={this.state.order}
+                     className="form-control-sm w-100"
+                     onChange={(e) => this.setOrder(e)}
+                  >
+                     <option value='[["createdAt"], ["desc"]]'>
+                        Most Recent
+                     </option>
+                     <option value='[["createdAt"], ["asc"]]'>Oldest</option>
+                     <option value='[["totalSuccessfulAttempts","createdAt"], ["asc", "asc"]]'>
+                        Hardest
+                     </option>
+                     <option value='[["totalSuccessfulAttempts","createdAt"], ["desc", "desc"]]'>
+                        Easiest
+                     </option>
                   </select>
                </div>
             </div>
-            {this.state.filteredCards.map((memoryCard) => {
+            {this.state.displayFilteredCards.map((memoryCard) => {
                return (
                   <MemoryCard
                      answer={memoryCard.answer}

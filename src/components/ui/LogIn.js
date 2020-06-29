@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { withRouter } from "react-router-dom";
 import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
+import { EMAIL_REGEX } from "../../utils/helpers";
 
 class LogIn extends React.Component {
    constructor(props) {
@@ -18,20 +19,17 @@ class LogIn extends React.Component {
    }
 
    // function for email validation using state
-   async setValidEmailState(emailInput) {
-      const lowerCasedEmailInput = emailInput.toLowerCase();
+   async setValidEmailState(logInEmailInput) {
+      const lowerCasedEmailInput = logInEmailInput.toLowerCase();
       console.log(lowerCasedEmailInput);
-      // must have valid email regex
-      // eslint-disable-next-line
-      const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       // set the state with email error and change string to an error message
-      if (emailInput === "")
+      if (logInEmailInput === "")
          this.setState({
             emailError: "Please enter your email address.",
             hasEmailError: true,
          });
       // test evaluates the email input and compares to the regex if false set the state with the error message and hasEmailError is true
-      else if (emailRegex.test(lowerCasedEmailInput) === false) {
+      else if (EMAIL_REGEX.test(lowerCasedEmailInput) === false) {
          this.setState({
             emailError: "Please enter a valid email address.",
             hasEmailError: true,
@@ -42,10 +40,10 @@ class LogIn extends React.Component {
    }
 
    // function to validate the password with state
-   async setValidPasswordState(signUpPasswordInput) {
-      console.log(signUpPasswordInput);
+   async setValidPasswordState(logInUpPasswordInput) {
+      console.log(logInUpPasswordInput);
 
-      if (signUpPasswordInput === "") {
+      if (logInUpPasswordInput === "") {
          this.setState({
             passwordError: "Please create a password.",
             hasPasswordError: true,
@@ -55,23 +53,22 @@ class LogIn extends React.Component {
       }
    }
 
-   async validateAndCreateUser() {
+   async validateUserAndLogIn() {
       //   can't be blank
-      const emailInput = document.getElementById("login-email-input").value;
-      console.log(emailInput);
-      const signUpPasswordInput = document.getElementById(
-         "login-password-input"
-      ).value;
-      await this.setValidEmailState(emailInput);
-      await this.setValidPasswordState(signUpPasswordInput);
+      const logInEmailInput = document.getElementById("login-email-input")
+         .value;
+      const logInPasswordInput = document.getElementById("login-password-input")
+         .value;
+      await this.setValidEmailState(logInEmailInput);
+      await this.setValidPasswordState(logInPasswordInput);
       if (
          this.state.hasEmailError === false &&
          this.state.hasPasswordError === false
       ) {
          const user = {
             id: getUuid(),
-            email: emailInput,
-            password: hash(signUpPasswordInput),
+            email: logInEmailInput,
+            password: hash(logInPasswordInput),
             createdAt: Date.now(),
          };
          console.log(user);
@@ -122,7 +119,7 @@ class LogIn extends React.Component {
                      type="button"
                      className="btn btn-success mt-2 float-right"
                      onClick={() => {
-                        this.validateAndCreateUser();
+                        this.validateUserAndLogIn();
                      }}
                   >
                      Log in
