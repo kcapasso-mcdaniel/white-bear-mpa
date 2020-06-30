@@ -17,17 +17,17 @@ export default function MemoryCard(props) {
                   {props.answer}
                </div>
             </div>
-         </div>
 
-         <Link to="edit" className="btn btn-link mt-2 ml-2">
-            <img
-               src={editIcon}
-               width="20px"
-               style={{ marginBottom: "3px", marginRight: "5px" }}
-               alt=""
-            />
-            Edit
-         </Link>
+            <Link to="edit" className="btn btn-link mt-2">
+               <img
+                  src={editIcon}
+                  width="20px"
+                  style={{ marginBottom: "3px", marginRight: "5px" }}
+                  alt=""
+               />
+               Edit
+            </Link>
+         </div>
       </div>
    );
 }
