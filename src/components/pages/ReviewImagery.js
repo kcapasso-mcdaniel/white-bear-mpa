@@ -14,6 +14,7 @@ class ReviewImagery extends React.Component {
          )
          .then(function (res) {
             // store what we get from api
+            console.log(res);
             props.dispatch({
                type: actions.STORE_QUEUED_CARDS,
                payload: res.data,
@@ -31,8 +32,8 @@ class ReviewImagery extends React.Component {
       */
    }
    render() {
-      // get all the cards and show the card with the current index
-      const memoryCard = this.props.queuedCards[this.props.indexOfCurrentCard];
+      // access a single memory card by accessing the index of the array
+      const memoryCard = this.props.queue.cards[this.props.queue.index];
       return (
          <AppTemplate>
             <div className="card">
@@ -61,12 +62,12 @@ class ReviewImagery extends React.Component {
    }
 }
 
+// Global state below
+
 function mapStateToProps(state) {
    return {
-      queuedCards: state.queuedCards,
-      indexOfCurrentCard: state.indexOfCurrentCard,
+      queue: state.queue,
    };
 }
 
-// curry argument into function
 export default connect(mapStateToProps)(ReviewImagery);

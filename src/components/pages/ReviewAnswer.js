@@ -7,12 +7,13 @@ import actions from "../../store/actions";
 
 class ReviewAnswer extends React.Component {
    goToNextCard() {
-      // TODO: if index of current card = length of the arra of all cards // end of the array
+      // action
       this.props.dispatch({ type: actions.UPDATE_INDEX_OF_CURRENT_CARD });
       this.props.history.push("/review-imagery");
    }
    render() {
-      const memoryCard = this.props.queuedCards[this.props.indexOfCurrentCard];
+      // access a single memory card by accessing the index of the array
+      const memoryCard = this.props.queue.cards[this.props.queue.index];
       return (
          //  wrapped the content in a React Template
          <AppTemplate>
@@ -60,8 +61,7 @@ class ReviewAnswer extends React.Component {
 
 function mapStateToProps(state) {
    return {
-      queuedCards: state.queuedCards,
-      indexOfCurrentCard: state.indexOfCurrentCard,
+      queue: state.queue,
    };
 }
 
