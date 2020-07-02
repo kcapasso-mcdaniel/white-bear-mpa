@@ -18,6 +18,15 @@ class ReviewAnswer extends React.Component {
       }
    }
 
+   storeEditableCard() {
+      console.log("STORING EDITABLE CARD");
+      const memoryCard = this.props.queue.cards[this.props.queue.index];
+      this.props.dispatch({
+         type: actions.STORE_EDITABLE_CARD,
+         payload: { card: memoryCard, route: "/review-answer" },
+      });
+   }
+
    render() {
       // access a single memory card by accessing the index of the array
       const memoryCard = this.props.queue.cards[this.props.queue.index];
@@ -35,9 +44,12 @@ class ReviewAnswer extends React.Component {
                </div>
             </div>
             <Link
-               to="review-imagery"
+               to="/edit"
                className="btn btn-link ml-4"
                id="back-to-answer-imagery"
+               onClick={() => {
+                  this.storeEditableCard();
+               }}
             >
                Edit card
             </Link>
