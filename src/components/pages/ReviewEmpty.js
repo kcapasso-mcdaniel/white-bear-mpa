@@ -1,27 +1,53 @@
 import React from "react";
-
 import AppTemplate from "../ui/AppTemplate";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import actions from "../../store/actions";
 
-export default function ReviewEmpty() {
-   return (
-      <AppTemplate>
-         <h4 className="my-4 text-center text-muted">Out of cards</h4>
-         <Link
-            to="review-answer"
-            className="btn btn-link ml-4 mt-5"
-            id="back-to-answer-imagery"
-         >
-            Previous card
-         </Link>
+class ReviewEmpty extends React.Component {
+   goToPrevCard() {
+      this.props.dispatch({ type: actions.DECREMENT_QUEUE_INDEX });
+      this.props.history.push("/review-answer");
+   }
 
-         <Link
-            to="review-imagery"
-            className="btn btn-outline-primary btn-lg float-right mt-5"
-            id="next-answer"
-         >
-            Get more cards
-         </Link>
-      </AppTemplate>
-   );
+   getMoreCards() {
+      this.props.dispatch({ type: actions.RESET_QUEUE });
+      this.props.history.push("/review-imagery");
+   }
+
+   render() {
+      return (
+         <AppTemplate>
+            <h4 className="my-4 text-center text-muted">Out of cards</h4>
+
+            {this.props.queue.index > 0 && (
+               <button
+                  className="btn btn-link mx-4 my-5"
+                  id="back-to-answer-imagery"
+                  onClick={() => this.goToPrevCard()}
+               >
+                  Previous card
+               </button>
+            )}
+
+            <button
+               className="btn btn-outline-primary btn-lg float-right mt-5"
+               id="next-answer"
+               onClick={() => {
+                  this.getMoreCards();
+               }}
+            >
+               Get more cards
+            </button>
+         </AppTemplate>
+      );
+   }
 }
+
+function mapStateToProps(state) {
+   return {
+      queue: state.queue,
+   };
+}
+
+// curry argument into function
+export default connect(mapStateToProps)(ReviewEmpty);

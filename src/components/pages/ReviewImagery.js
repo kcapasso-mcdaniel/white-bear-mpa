@@ -8,29 +8,32 @@ import actions from "../../store/actions";
 class ReviewImagery extends React.Component {
    constructor(props) {
       super(props);
-      axios
-         .get(
-            "https://raw.githubusercontent.com/kcapasso-mcdaniel/white-bear-mpa/master/src/mock-data.js/memory-cards.json"
-         )
-         .then(function (res) {
-            // store what we get from api
-            console.log(res);
-            props.dispatch({
-               type: actions.STORE_QUEUED_CARDS,
-               payload: res.data,
+      if (props.queue.cards.length === 0) {
+         console.log("Empty array of queue cards");
+         axios
+            .get(
+               "https://raw.githubusercontent.com/kcapasso-mcdaniel/white-bear-mpa/master/src/mock-data.js/memory-cards.json"
+            )
+            .then((res) => {
+               // store what we get from api
+               console.log(res);
+               props.dispatch({
+                  type: actions.STORE_QUEUED_CARDS,
+                  payload: res.data,
+               });
+            })
+            .catch((error) => {
+               // handle error
+               console.log(error);
             });
-         })
-         .catch(function (error) {
-            // handle error
-            console.log(error);
-         });
-
-      /* 
-            queuedCards: [], 
-            indexOfCurrentCard: 0, 
-            user:{}
-      */
+      }
    }
+
+   goToPrevCard() {
+      this.props.dispatch({ type: actions.DECREMENT_QUEUE_INDEX });
+      this.props.history.push("/review-answer");
+   }
+
    render() {
       // access a single memory card by accessing the index of the array
       const memoryCard = this.props.queue.cards[this.props.queue.index];
@@ -42,13 +45,15 @@ class ReviewImagery extends React.Component {
                </div>
             </div>
 
-            <Link
-               to="review-answer"
-               className="btn btn-link mx-4 my-5"
-               id="back-to-answer-imagery"
-            >
-               Previous card
-            </Link>
+            {this.props.queue.index > 0 && (
+               <button
+                  className="btn btn-link mx-4 my-5"
+                  id="back-to-answer-imagery"
+                  onClick={() => this.goToPrevCard()}
+               >
+                  Previous card
+               </button>
+            )}
 
             <Link
                to="review-answer"

@@ -1,17 +1,43 @@
 import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import MemoryCard from "../ui/MemoryCard";
-import memoryCards from "../../mock-data.js/memory-cards";
 import orderBy from "lodash/orderBy";
+import axios from "axios";
 
-export default class AllCards extends React.Component {
+class AllCards extends React.Component {
    constructor(props) {
       super(props);
+
       this.state = {
          order: '["createdAt"], ["desc"]',
-         allMemoryCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
-         displayFilteredCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
+         allMemoryCards: [],
+         displayFilteredCards: [],
       };
+   }
+
+   // allows to call local state
+   componentDidMount() {
+      axios
+         .get(
+            "https://raw.githubusercontent.com/kcapasso-mcdaniel/white-bear-mpa/master/src/mock-data.js/memory-cards.json"
+         )
+         .then((res) => {
+            // store what we get from api
+            console.log(res.data);
+            const memoryCards = res.data;
+            this.setState({
+               allMemoryCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
+               displayFilteredCards: orderBy(
+                  memoryCards,
+                  ["createdAt"],
+                  ["desc"]
+               ),
+            });
+         })
+         .catch((error) => {
+            // handle error
+            console.log(error);
+         });
    }
 
    // function to search for a word within a card
@@ -116,3 +142,5 @@ export default class AllCards extends React.Component {
       );
    }
 }
+
+export default AllCards;

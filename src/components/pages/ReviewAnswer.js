@@ -7,10 +7,17 @@ import actions from "../../store/actions";
 
 class ReviewAnswer extends React.Component {
    goToNextCard() {
-      // action
-      this.props.dispatch({ type: actions.UPDATE_INDEX_OF_CURRENT_CARD });
-      this.props.history.push("/review-imagery");
+      // on the last card increment
+      if (this.props.queue.index === this.props.queue.cards.length - 1) {
+         console.log("we are out of cards");
+         this.props.dispatch({ type: actions.INCREMENT_QUEUE_INDEX });
+         this.props.history.push("/review-empty");
+      } else {
+         this.props.dispatch({ type: actions.INCREMENT_QUEUE_INDEX });
+         this.props.history.push("/review-imagery");
+      }
    }
+
    render() {
       // access a single memory card by accessing the index of the array
       const memoryCard = this.props.queue.cards[this.props.queue.index];
