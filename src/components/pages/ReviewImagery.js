@@ -14,6 +14,7 @@ class ReviewImagery extends React.Component {
             .get(
                "https://raw.githubusercontent.com/kcapasso-mcdaniel/white-bear-mpa/master/src/mock-data.js/memory-cards.json"
             )
+            // returns a promise
             .then((res) => {
                // store what we get from api
                console.log(res);
@@ -22,8 +23,8 @@ class ReviewImagery extends React.Component {
                   payload: res.data,
                });
             })
+            // handles error
             .catch((error) => {
-               // handle error
                console.log(error);
             });
       }
@@ -35,7 +36,7 @@ class ReviewImagery extends React.Component {
    }
 
    render() {
-      // access a single memory card by accessing the index of the array
+      // in order to render the card get all the cards and use bracket notation to find the index of the current card
       const memoryCard = this.props.queue.cards[this.props.queue.index];
       return (
          <AppTemplate>

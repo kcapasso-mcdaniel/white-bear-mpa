@@ -6,9 +6,10 @@ import memoryCards from "../../mock-data.js/memory-cards";
 import toDisplayDate from "date-fns/format";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
+import { connect } from "react-redux";
 const memoryCard = memoryCards[0];
 
-export default class Edit extends React.Component {
+class Edit extends React.Component {
    constructor(props) {
       super(props);
       console.log("This is the edit component");
@@ -54,7 +55,7 @@ export default class Edit extends React.Component {
                <div className="card-body bg-primary">
                   <textarea
                      rows="4"
-                     defaultValue={memoryCard.imagery}
+                     defaultValue={this.props.editableCard.card.imagery}
                      onChange={(e) => this.setImageryText(e)}
                   ></textarea>
                </div>
@@ -63,7 +64,7 @@ export default class Edit extends React.Component {
                <div className="card-body bg-secondary">
                   <textarea
                      rows="4"
-                     defaultValue={memoryCard.answer}
+                     defaultValue={this.props.editableCard.card.answer}
                      onChange={(e) => this.setAnswerText(e)}
                   ></textarea>
                </div>
@@ -127,14 +128,22 @@ export default class Edit extends React.Component {
                      <th className="text-muted" scope="row">
                         Created on:
                      </th>
-                     <td>{toDisplayDate(memoryCard.createdAt, "MMM. d, y")}</td>
+                     <td>
+                        {toDisplayDate(
+                           this.props.editableCard.card.createdAt,
+                           "MMM. d, y"
+                        )}
+                     </td>
                   </tr>
                   <tr>
                      <th className="text-muted" scope="row">
                         Last attempt:
                      </th>
                      <td>
-                        {toDisplayDate(memoryCard.lastAttemptAt, "MMM. d, y")}
+                        {toDisplayDate(
+                           this.props.editableCard.card.lastAttemptAt,
+                           "MMM. d, y"
+                        )}
                      </td>
                   </tr>
                   <tr>
@@ -142,14 +151,19 @@ export default class Edit extends React.Component {
                         Next attempt:
                      </th>
                      <td>
-                        {toDisplayDate(memoryCard.nextAttemptAt, "MMM. d, y")}
+                        {toDisplayDate(
+                           this.props.editableCard.card.nextAttemptAt,
+                           "MMM. d, y"
+                        )}
                      </td>
                   </tr>
                   <tr>
                      <th className="text-muted" scope="row">
                         Consecutives:
                      </th>
-                     <td>{memoryCard.totalSuccessfulAttempts}</td>
+                     <td>
+                        {this.props.editableCard.card.totalSuccessfulAttempts}
+                     </td>
                   </tr>
                </thead>
             </table>
@@ -184,3 +198,12 @@ export default class Edit extends React.Component {
       );
    }
 }
+
+function mapStateToProps(state) {
+   return {
+      editable: state.editableCard,
+   };
+}
+
+// curry argument into function
+export default connect(mapStateToProps)(Edit);

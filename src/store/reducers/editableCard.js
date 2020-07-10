@@ -8,7 +8,7 @@ export default function editableCard(editableCard = {}, action) {
          //
          newEditableCard.card = action.payload.card;
          //
-         newEditableCard.prevRouse = action.payload.prevRoute;
+         newEditableCard.prevRoute = action.payload.prevRoute;
          return newEditableCard;
       default:
          return editableCard;
