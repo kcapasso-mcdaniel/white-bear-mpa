@@ -130,13 +130,7 @@ class AllCards extends React.Component {
                </div>
             </div>
             {this.state.displayFilteredCards.map((memoryCard) => {
-               return (
-                  <MemoryCard
-                     answer={memoryCard.answer}
-                     imagery={memoryCard.imagery}
-                     key={memoryCard.id}
-                  />
-               );
+               return <MemoryCard card={memoryCard} key={memoryCard.id} />;
             })}
          </AppTemplate>
       );

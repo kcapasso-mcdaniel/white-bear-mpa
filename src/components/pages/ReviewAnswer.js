@@ -6,6 +6,13 @@ import { connect } from "react-redux";
 import actions from "../../store/actions";
 
 class ReviewAnswer extends React.Component {
+   constructor(props) {
+      super(props);
+      if (this.props.queue.cards.length === 0) {
+         this.props.history.push("/review-empty");
+      }
+   }
+
    goToNextCard() {
       // on the last card increment
       if (this.props.queue.index === this.props.queue.cards.length - 1) {
@@ -23,7 +30,7 @@ class ReviewAnswer extends React.Component {
       const memoryCard = this.props.queue.cards[this.props.queue.index];
       this.props.dispatch({
          type: actions.STORE_EDITABLE_CARD,
-         payload: { card: memoryCard, route: "/review-answer" },
+         payload: { card: memoryCard, prevRoute: "/review-answer" },
       });
    }
 
@@ -51,7 +58,7 @@ class ReviewAnswer extends React.Component {
                   this.storeEditableCard();
                }}
             >
-               Edit card
+               Edit
             </Link>
             <div className="float-right">
                <button
