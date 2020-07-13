@@ -1,9 +1,12 @@
 import React from "react";
 import classnames from "classnames";
-import { withRouter } from "react-router-dom";
 import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
 import { EMAIL_REGEX } from "../../utils/helpers";
+import axios from "axios";
+import actions from "../../store/actions";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class LogIn extends React.Component {
    constructor(props) {
@@ -71,7 +74,25 @@ class LogIn extends React.Component {
             password: hash(logInPasswordInput),
             createdAt: Date.now(),
          };
-         console.log(user);
+         console.log("created user object for POST: ", user);
+         // Mimic API response
+         axios
+            .get(
+               "https://raw.githubusercontent.com/kcapasso-mcdaniel/white-bear-mpa/master/src/mock-data.js/user.json"
+            )
+            .then((res) => {
+               // store what we get from api
+               const currentUser = res.data;
+               console.log(currentUser);
+               this.props.dispatch({
+                  type: actions.UPDATE_CURRENT_USER,
+                  payload: res.data,
+               });
+            })
+            .catch((error) => {
+               // handle error
+               console.log(error);
+            });
          this.props.history.push("/create-answer");
       }
    }
@@ -131,4 +152,8 @@ class LogIn extends React.Component {
    }
 }
 
-export default withRouter(LogIn);
+function mapStateToProps(state) {
+   return {};
+}
+
+export default withRouter(connect(mapStateToProps)(LogIn));

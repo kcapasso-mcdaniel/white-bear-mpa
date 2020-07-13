@@ -8,6 +8,8 @@ import actions from "../../store/actions";
 class ReviewImagery extends React.Component {
    constructor(props) {
       super(props);
+
+      // not always viable to put the api call in the constructor
       if (props.queue.cards.length === 0) {
          console.log("Empty array of queue cards");
          axios

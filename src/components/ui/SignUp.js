@@ -3,6 +3,9 @@ import classnames from "classnames";
 import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
 import { EMAIL_REGEX } from "../../utils/helpers";
+import axios from "axios";
+import actions from "../../store/actions";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class SignUp extends React.Component {
@@ -108,6 +111,24 @@ class SignUp extends React.Component {
             createdAt: Date.now(),
          };
          console.log(user);
+         // Mimic API response
+         axios
+            .get(
+               "https://raw.githubusercontent.com/kcapasso-mcdaniel/white-bear-mpa/master/src/mock-data.js/user.json"
+            )
+            .then((res) => {
+               // store what we get from api
+               const currentUser = res.data;
+               console.log(currentUser);
+               this.props.dispatch({
+                  type: actions.UPDATE_CURRENT_USER,
+                  payload: res.data,
+               });
+            })
+            .catch((error) => {
+               // handle error
+               console.log(error);
+            });
          this.props.history.push("/create-answer");
       }
    }
@@ -190,5 +211,9 @@ class SignUp extends React.Component {
       );
    }
 }
+function mapStateToProps(state) {
+   return {};
+}
 
-export default withRouter(SignUp);
+// withRouter is a function - connect curry sign up
+export default withRouter(connect(mapStateToProps)(SignUp));

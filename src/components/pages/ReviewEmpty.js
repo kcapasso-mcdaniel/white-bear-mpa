@@ -11,7 +11,9 @@ class ReviewEmpty extends React.Component {
 
    getMoreCards() {
       this.props.dispatch({ type: actions.RESET_QUEUE });
+      console.log(this.props.dispatch({ type: actions.RESET_QUEUE }));
       this.props.history.push("/review-imagery");
+      console.log("clicked");
    }
 
    render() {
@@ -31,7 +33,6 @@ class ReviewEmpty extends React.Component {
 
             <button
                className="btn btn-outline-primary btn-lg float-right mt-5"
-               id="next-answer"
                onClick={() => {
                   this.getMoreCards();
                }}
