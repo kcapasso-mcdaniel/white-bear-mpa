@@ -6,13 +6,14 @@ import actions from "../../store/actions";
 class ReviewEmpty extends React.Component {
    goToPrevCard() {
       this.props.dispatch({ type: actions.DECREMENT_QUEUE_INDEX });
+
       this.props.history.push("/review-answer");
    }
 
    getMoreCards() {
       this.props.dispatch({ type: actions.RESET_QUEUE });
-      console.log(this.props.dispatch({ type: actions.RESET_QUEUE }));
       this.props.history.push("/review-imagery");
+
       console.log("clicked");
    }
 
