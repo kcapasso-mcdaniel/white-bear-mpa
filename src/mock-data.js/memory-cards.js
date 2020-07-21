@@ -45,6 +45,17 @@ const memoryCards = [
       totalSuccessfulAttempts: 4,
       level: 1,
    },
+   {
+      id: "3bdf6e74-7874-4deb-97f3-f78636ca4cc0",
+      imagery: " The collection of data needed to be sorted into a new list ",
+      answer: "in order to divide the tasks, first look up the mdn docs",
+      userId: "0bb95b01-d563-401c-99ef-8d83d1e823cd",
+      createdAt: 1595350642895,
+      nextAttemptAt: 1595350660042,
+      lastAttemptAt: 1595350668512,
+      totalSuccessfulAttempts: 4,
+      level: 1,
+   },
 ];
 
 export default memoryCards;
